@@ -8,7 +8,7 @@ $con = $db->conectar();
 $id = $_GET['id'];
 $activo = 1;
 
-$query = $con->prepare("SELECT codigo, descripcion, inventariable, stock FROM productos WHERE id = :id AND activo=:activo");
+$query = $con->prepare("SELECT nombre, descripcion, inventariable, stock FROM productos WHERE id = :id AND activo=:activo");
 $query->execute(['id' => $id, 'activo' => $activo]);
 $num = $query->rowCount();
 if ($num > 0) {
@@ -47,8 +47,8 @@ if ($num > 0) {
                     <form class="row g-3" method="POST" action="guarda.php" autocomplete="off">
                         <input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
                         <div class="col-md-4">
-                            <label for="codigo" class="form-label">Código</label>
-                            <input type="text" id="codigo" name="codigo" class="form-control" value="<?php echo $row['codigo']; ?>" required autofocus>
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" value="<?php echo $row['nombre']; ?>" required autofocus>
                         </div>
 
                         <div class="col-md-8">

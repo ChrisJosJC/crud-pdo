@@ -3,9 +3,9 @@
 class Database
 {
     private $hostname = "localhost";
-    private $database = "almacen";
+    private $database = "hybric";
     private $username = "root";
-    private $password = "password";
+    private $password = "";
     private $charset = "utf8";
 
     function conectar()
@@ -22,7 +22,7 @@ class Database
 
             return $pdo;
         } catch (PDOException $e) {
-            echo 'Error conexion: ' . $e->getMessage();
+            echo 'Error al hacer la conexion: ' . $e->getMessage();
             exit;
         }
     }

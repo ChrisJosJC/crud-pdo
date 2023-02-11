@@ -6,37 +6,55 @@ $db = new Database();
 $con = $db->conectar();
 
 $correcto = false;
-
+$nombre = $_POST['nombre'];
+$direccion = $_POST['direccion'];
+$edad = $_POST['edad'];
+$genero = $_POST['genero'];
+$email = $_POST['email'];
+$departamento = $_POST['departamento'];
+$salario = $_POST['salario'];
+$telefono = $_POST['telefono'];
 if (isset($_POST['id'])) {
-
+    
+    
     $id = $_POST['id'];
-    $codigo = $_POST['codigo'];
-    $descripcion = $_POST['descripcion'];
-    $stock = $_POST['stock'];
-    $inventariable = isset($_POST['inventariable']) ? $_POST['inventariable'] : 0;
-
-    if ($stock == '') {
-        $stock = 0;
-    }
-
-    $query = $con->prepare("UPDATE productos SET codigo=?, descripcion=?, inventariable=?, stock=? WHERE id=?");
-    $resultado = $query->execute(array($codigo, $descripcion, $inventariable, $stock, $id));
+    
+    $query = $con->prepare(
+    "UPDATE productos SET (:nombre, :direccion, :telefono, :edad, :genero,:email,:departamento,:salario)");
+    $query->bindParam(":nombre", $nombre);
+    $query->bindParam(":direccion", $direccion);
+    $query->bindParam(":telefono", $telefono);
+    $query->bindParam(":edad", $edad);
+    $query->bindParam(":genero", $genero);
+    $query->bindParam(":email", $email);
+    $query->bindParam(":departamento", $departamento);
+    $query->bindParam(":salario", $salario);
+    $resultado = $query->execute();
 
     if ($resultado) {
         $correcto = true;
     }
 } else {
-    $codigo = $_POST['codigo'];
-    $descripcion = $_POST['descripcion'];
-    $stock = $_POST['stock'];
-    $inventariable = isset($_POST['inventariable']) ? $_POST['inventariable'] : 0;
+    // $nombre = $_POST['nombre'];
+    // $descripcion = $_POST['descripcion'];
+    // $stock = $_POST['stock'];
+    // $inventariable = isset($_POST['inventariable']) ? $_POST['inventariable'] : 0;
 
-    if ($stock == '') {
-        $stock = 0;
-    }
+    // if ($stock == '') {
+    //     $stock = 0;
+    // }
 
-    $query = $con->prepare("INSERT INTO productos (codigo, descripcion, inventariable, stock, activo) VALUES (:cod, :descr, :inv, :sto, 1)");
-    $resultado = $query->execute(array('cod' => $codigo, 'descr' => $descripcion, 'inv' => $inventariable, 'sto' => $stock));
+    $query = $con->prepare("INSERT INTO `empleado`(`nombre`, `direccion`, `telefono`, `edad`, `genero`, `email`, `departamento`, `salario`) VALUES (:nombre, :direccion, :telefono, :edad, :genero,:email,:departamento,:salario)");
+    $query->bindParam(":nombre",$nombre);
+    $query->bindParam(":direccion",$direccion);
+    $query->bindParam(":telefono",$telefono);
+    $query->bindParam(":edad",$edad);
+    $query->bindParam(":genero",$genero);
+    $query->bindParam(":email",$email);
+    $query->bindParam(":departamento",$departamento);
+    $query->bindParam(":salario",$salario);
+    // array('cod' => $nombre, 'descr' => $descripcion, 'inv' => $inventariable, 'sto' => $stock)
+    $resultado = $query->execute();
 
     if ($resultado) {
         $correcto = true;

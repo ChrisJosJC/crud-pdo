@@ -4,13 +4,9 @@ require 'config/database.php';
 
 $db = new Database();
 $con = $db->conectar();
-
-$activo = 1;
-
-$comando = $con->prepare("SELECT id, codigo, descripcion, stock FROM productos WHERE activo=:mi_activo ORDER BY codigo ASC");
-$comando->execute(['mi_activo' => $activo]);
+$comando = $con->prepare("SELECT id, nombre, direccion, telefono, edad, genero, email, departamento, salario  FROM empleado ORDER BY nombre ASC");
+$comando->execute();
 $resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,7 +15,7 @@ $resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Almacen</title>
+    <title>Hybric</title>
 
     <link rel="stylesheet" href="public/css/bootstrap.min.css">
     <link rel="stylesheet" href="public/css/estilos.css">
@@ -31,7 +27,7 @@ $resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
         <div class="p-3 rounded">
             <div class="row">
                 <div class="col-12">
-                    <h4>Productos
+                    <h4>Empleados
                         <a href="nuevo.php" class="btn btn-primary float-right">Nuevo</a>
                     </h4>
                 </div>
@@ -43,11 +39,14 @@ $resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Código</th>
-                                <th>Descripción</th>
-                                <th>Stock</th>
-                                <th></th>
-                                <th></th>
+                                <th>Nombre</th>
+                                <th>Direccion</th>
+                                <th>Telefono</th>
+                                <th>Edad</th>
+                                <th>Genero</th>
+                                <th>Email</th>
+                                <th>Departamento</th>
+                                <th>Salario</th>
                             </tr>
                         </thead>
 
@@ -57,9 +56,14 @@ $resultado = $comando->fetchAll(PDO::FETCH_ASSOC);
                             ?>
                                 <tr>
                                     <td><?php echo $row['id']; ?></td>
-                                    <td><?php echo $row['codigo']; ?></td>
-                                    <td><?php echo $row['descripcion']; ?></td>
-                                    <td><?php echo $row['stock']; ?></td>
+                                    <td><?php echo $row['nombre']; ?></td>
+                                    <td><?php echo $row['direccion']; ?></td>
+                                    <td><?php echo $row['telefono']; ?></td>
+                                    <td><?php echo $row['edad']; ?></td>
+                                    <td><?php echo $row['genero']; ?></td>
+                                    <td><?php echo $row['email']; ?></td>
+                                    <td><?php echo $row['departamento']; ?></td>
+                                    <td><?php echo $row['salario']; ?></td>
                                     <td><a href="editar.php?id=<?php echo $row['id']; ?>" class="btn btn-warning">Editar</a></td>
                                     <td><a href="eliminar.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">Eliminar</a></td>
                                 </tr>
